@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Start Test') {
         	steps {
-        		sh 'nvm clean test -pl common'
+        		sh 'mvn clean test -pl common'
         	}
         }
     }
