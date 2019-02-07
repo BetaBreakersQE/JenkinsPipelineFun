@@ -4,8 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn --version'
-				sh 'ls'
-				sh 'cd'
+				sh 'mvn -B archetype:generate'
             }
         }
     }
