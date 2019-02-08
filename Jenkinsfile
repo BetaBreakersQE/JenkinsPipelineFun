@@ -1,10 +1,8 @@
 pipeline {
   agent {
     docker {
-      image 'maven:3.6.0'
+      image
     }
-
-<<<<<<< HEAD
             }
         }
         stage('Start Test') {
@@ -12,7 +10,6 @@ pipeline {
         		sh 'mvn clean test -pl common'
         	}
         }
-=======
   }
   stages {
     stage('build') {
@@ -25,7 +22,6 @@ pipeline {
       steps {
         sh 'mvn clean test -pl common'
       }
->>>>>>> f06cde3f78305c6ca2e2a18a7aed27edf498a967
     }
   }
 }
