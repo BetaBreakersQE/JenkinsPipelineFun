@@ -1,45 +1,49 @@
-plugins:
-  sites:
-  - id: "default"
-    url: "http://updates.jenkins-ci.org/update-center.json"
 jenkins:
-  agentProtocols:
-  - "JNLP-connect"
-  - "JNLP2-connect"
-  - "JNLP4-connect"
-  - "Ping"
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code Plugin\n\n"
+  numExecutors: 5
+  scmCheckoutRetryCount: 2
+  mode: NORMAL
+  
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: FOO
+            value: BAR
+
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: false
-  disableRememberMe: false
-  mode: NORMAL
-  numExecutors: 2
-  primaryView:
-    all:
-      name: "all"
-  quietPeriod: 5
-  scmCheckoutRetryCount: 0
-  securityRealm:
-    local:
-      allowsSignup: false
-      enableCaptcha: false
-      users:
-      - id: "admin"
-  slaveAgentPort: 50000
-  views:
-  - all:
-      name: "all"
+
+  clouds:
+    - docker:
+        name: "docker"
+        dockerApi:
+          dockerHost:
+            uri: "unix:///var/run/docker.sock"
+        templates:
+          - labelString: "docker-agent"
+            dockerTemplateBase:
+              image: "jenkins/slave"
+              volumes:
+                - hello:/hello
+                - world:/world
+              environmentsString: |
+                hello=world
+                foo=bar
+            remoteFs: "/home/jenkins/agent"
+            connector:
+              attach:
+                user: "jenkins"
+            instanceCapStr: "10"
+
+  
+
 tool:
   git:
     installations:
-    - home: "git"
-      name: "Default"
-  jdk:
-    defaultProperties:
-    - installSource:
-        installers:
-        - jdkInstaller:
-            acceptLicense: false
+      - name: git
+        home: /usr/local/bin/git
+
+security:
+    remotingCLI:
+          enabled: false
