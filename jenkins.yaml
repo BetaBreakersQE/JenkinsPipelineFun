@@ -3,12 +3,6 @@ jenkins:
   numExecutors: 5
   scmCheckoutRetryCount: 2
   mode: NORMAL
-  
-  globalNodeProperties:
-    - envVars:
-        env:
-          - key: FOO
-            value: BAR
 
   authorizationStrategy:
     loggedInUsersCanDoAnything:
@@ -23,7 +17,7 @@ jenkins:
         templates:
           - labelString: "docker-agent"
             dockerTemplateBase:
-              image: "jenkins/slave"
+              image: "jenkins/jenkins:lts"
               volumes:
                 - hello:/hello
                 - world:/world
