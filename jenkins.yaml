@@ -30,7 +30,10 @@ jenkins:
                 user: "jenkins"
             instanceCapStr: "10"
 
-  
+plugins:
+  - name: "Cucumber reports"
+  - name: "Configuration as Code"
+  - name: "Configuration as Code Support"
 
 tool:
   git:
